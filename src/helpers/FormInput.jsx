@@ -3,6 +3,7 @@ import React from "react";
 import { Dropdown } from "primereact/dropdown";
 import Arrow from "../assets/images/angle-down.png";
 
+
 export const NormalTextField = ({
   label,
   name,
@@ -49,7 +50,7 @@ export const NormalTextField = ({
           placeholder={placeholder}
           minLength={minLength}
           style={{
-            // width: "100%",
+            width: "100%",
             height: "100%",
             border: "none",
             outline: "none",

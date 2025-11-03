@@ -9,8 +9,8 @@ function AddressModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
-    setFormData(reset)
-  }
+    setFormData(reset);
+  };
   const [formData, setFormData] = useState({
     address: "",
     addressType: "",
@@ -25,7 +25,7 @@ function AddressModal() {
     attention: "",
   });
 
-  const reset={
+  const reset = {
     address: "",
     addressType: "",
     labels: "",
@@ -37,35 +37,32 @@ function AddressModal() {
     state: "",
     postcode: "",
     attention: "",
-  }
+  };
 
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
 
-  useEffect(()=>{
-    const countryList=Country.getAllCountries().map((c)=>({
-      value:c.isoCode,
-      label:c.name
-    }))
-    setCountries(countryList)
+  useEffect(() => {
+    const countryList = Country.getAllCountries().map((c) => ({
+      value: c.isoCode,
+      label: c.name,
+    }));
+    setCountries(countryList);
     //  console.log(countryList);
-  },[])
- 
-  
-  useEffect(()=>{
-    if(formData.country)
-    {
-      const stateList=State.getStatesOfCountry(formData.country).map((s)=>({
-        value:s.isoCode,
-        label:s.name
-      }))
-      setStates(stateList)
+  }, []);
+
+  useEffect(() => {
+    if (formData.country) {
+      const stateList = State.getStatesOfCountry(formData.country).map((s) => ({
+        value: s.isoCode,
+        label: s.name,
+      }));
+      setStates(stateList);
       // console.log(stateList)
-    }
-    else{
+    } else {
       setStates([]);
     }
-  },[formData.country])
+  }, [formData.country]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -88,10 +85,8 @@ function AddressModal() {
       newErrors.streetNumber = "Street Number is required";
     if (!formData.streetnum.trim())
       newErrors.streetnum = "Street Number 1 is required";
-
     if (!formData.suburb.trim()) newErrors.suburb = "Suburb is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
-
     if (!formData.country.trim()) newErrors.country = "Country  is required";
     if (!formData.state) newErrors.state = "State is required";
     if (!formData.postcode) newErrors.postcode = "Postcode is required";
@@ -137,6 +132,7 @@ function AddressModal() {
             width: "50.5rem",
             bgcolor: "background.paper",
             boxShadow: 24,
+            overflowY: "scroll",
             maxHeight: "90vh",
             borderRadius: "0.75rem",
           }}
@@ -146,7 +142,6 @@ function AddressModal() {
               marginLeft: "1.5rem",
               marginRight: "1.5rem",
               marginTop: "1rem",
-              
             }}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -157,7 +152,7 @@ function AddressModal() {
                   sx={{
                     fontSize: "1.25rem",
                     color: "#111827",
-                    lineHeight: "1.875",
+                    lineHeight: "1.875rem",
                   }}
                 >
                   Add New Billing Address
@@ -384,13 +379,13 @@ function AddressModal() {
                   )}
                 </Box>
               </Box>
-              <Box  
+              <Box
                 sx={{
-                  width:'50%',
+                  width: "50%",
                   gap: 2,
                   mt: "1rem",
-                }}>
-             
+                }}
+              >
                 <NormalTextField
                   type="number"
                   label="Attention To"
@@ -401,7 +396,7 @@ function AddressModal() {
                   sx={{ width: "100%" }}
                 />
                 {errors.attention && (
-                  <span style={{ color: "#f27466",fontSize: "0.875rem" }}>
+                  <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                     {errors.attention}
                   </span>
                 )}
@@ -410,8 +405,8 @@ function AddressModal() {
                 <Box
                   sx={{
                     display: "flex",
-                    mt:'1.5rem',
-                    mb:'1.5rem',
+                    mt: "1.5rem",
+                    mb: "1.5rem",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
@@ -424,8 +419,11 @@ function AddressModal() {
                         width: "7.5rem",
                         color: "#EF4A00",
                         borderColor: "#EF4A00",
+                        fontSize: "1rem",
+                        fontFamily: "Nunito",
+                        textTransform: "none",
                       }}
-                       onClick={handleClose} 
+                      onClick={handleClose}
                     >
                       Cancel
                     </Button>
@@ -434,7 +432,13 @@ function AddressModal() {
                     <Button
                       type="submit"
                       variant="contained"
-                      sx={{ height: "3rem", width: "7.5rem" }}
+                      sx={{
+                        height: "3rem",
+                        width: "7.5rem",
+                        fontSize: "1rem",
+                        fontFamily: "Nunito",
+                        textTransform: "none",
+                      }}
                     >
                       Save
                     </Button>
