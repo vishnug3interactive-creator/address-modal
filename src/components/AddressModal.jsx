@@ -1,11 +1,114 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Button, Modal, Typography, FormControl } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { NormalTextField } from "../helpers/FormInput";
+import { NormalDropdown } from "../helpers/FormInput";
+import { Country, State } from "country-state-city";
 
 function AddressModal() {
   const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setFormData(reset)
+  }
+  const [formData, setFormData] = useState({
+    address: "",
+    addressType: "",
+    labels: "",
+    streetNumber: "",
+    streetnum: "",
+    suburb: "",
+    city: "",
+    country: "",
+    state: "",
+    postcode: "",
+    attention: "",
+  });
+
+  const reset={
+    address: "",
+    addressType: "",
+    labels: "",
+    streetNumber: "",
+    streetnum: "",
+    suburb: "",
+    city: "",
+    country: "",
+    state: "",
+    postcode: "",
+    attention: "",
+  }
+
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+
+  useEffect(()=>{
+    const countryList=Country.getAllCountries().map((c)=>({
+      value:c.isoCode,
+      label:c.name
+    }))
+    setCountries(countryList)
+    //  console.log(countryList);
+  },[])
+ 
+  
+  useEffect(()=>{
+    if(formData.country)
+    {
+      const stateList=State.getStatesOfCountry(formData.country).map((s)=>({
+        value:s.isoCode,
+        label:s.name
+      }))
+      setStates(stateList)
+      // console.log(stateList)
+    }
+    else{
+      setStates([]);
+    }
+  },[formData.country])
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!formData.address.trim()) newErrors.address = "Address is required";
+    if (!formData.addressType)
+      newErrors.addressType = "Address Type is required";
+    if (!formData.labels.trim()) newErrors.labels = "Labels is required";
+    if (!formData.streetNumber.trim())
+      newErrors.streetNumber = "Street Number is required";
+    if (!formData.streetnum.trim())
+      newErrors.streetnum = "Street Number 1 is required";
+
+    if (!formData.suburb.trim()) newErrors.suburb = "Suburb is required";
+    if (!formData.city.trim()) newErrors.city = "City is required";
+
+    if (!formData.country.trim()) newErrors.country = "Country  is required";
+    if (!formData.state) newErrors.state = "State is required";
+    if (!formData.postcode) newErrors.postcode = "Postcode is required";
+    if (!formData.attention) newErrors.attention = "Attention is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    alert("Form Submitted");
+    // console.log("Form submitted successfully");
+  };
+
+  console.log(formData);
 
   return (
     <Box
@@ -35,7 +138,7 @@ function AddressModal() {
             bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
-            overflowY: "scroll",
+            // overflowY: "scroll",
             maxHeight: "90vh",
             borderRadius: "0.75rem",
           }}
@@ -63,8 +166,8 @@ function AddressModal() {
               </Box>
               <Box onClick={handleClose}>
                 <svg
-                  width="24"
-                  height="24"
+                  width="15"
+                  height="15"
                   viewBox="0 0 15 15"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -78,74 +181,262 @@ function AddressModal() {
                 </svg>
               </Box>
             </Box>
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 2,
-                mt: "1.875rem",
-              }}
-            >
-              <Box>
-                <NormalTextField
-                  type="text"
-                  name="jobTitle"
-                  label="Job Title"
-                  placeholder="Enter Job Title"
-                //   value={formData.jobTitle}
-                //   handleChange={handleChange}
-                  required
-                />
-                {/* {errors.jobTitle && (
-                  <span style={{ color: "red", fontSize: "0.875rem" }}>
-                    {errors.jobTitle}
-                  </span>
-                )} */}
+            <Box component="form" onSubmit={handleSubmit}>
+              <Box sx={{ mt: "1.5rem" }}>
+                <Box>
+                  <NormalTextField
+                    type="text"
+                    name="address"
+                    label="Search Online"
+                    placeholder="Enter your address"
+                    value={formData.address}
+                    handleChange={handleChange}
+                    required
+                  />
+                  {errors.address && (
+                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                      {errors.address}
+                    </span>
+                  )}
+                </Box>
               </Box>
-              <Box>
+
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 2,
+                  mt: "1rem",
+                }}
+              >
+                <Box>
+                  <NormalDropdown
+                    label="Address Type"
+                    placeholder="Select your Address Type"
+                    name="addressType"
+                    value={formData.addressType}
+                    width="22rem"
+                    handleChange={handleChange}
+                    options={[
+                      { value: "address1", label: "Address 1" },
+                      { value: "address2", label: "Address 2" },
+                    ]}
+                  />
+                  {errors.addressType && (
+                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                      {errors.addressType}
+                    </span>
+                  )}
+                </Box>
+                <Box>
+                  <NormalTextField
+                    type="number"
+                    label="labels"
+                    name="labels"
+                    placeholder="Enter your Label"
+                    value={formData.labels}
+                    handleChange={handleChange}
+                    sx={{ ml: "12px" }}
+                  />
+                  {errors.labels && (
+                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                      {errors.labels}
+                    </span>
+                  )}
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 2,
+                  mt: "1rem",
+                }}
+              >
+                <Box>
+                  <NormalTextField
+                    type="text"
+                    name="streetNumber"
+                    label="Street Number"
+                    placeholder="Enter your Street Number"
+                    value={formData.streetNumber}
+                    handleChange={handleChange}
+                    required
+                  />
+                  {errors.streetNumber && (
+                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                      {errors.streetNumber}
+                    </span>
+                  )}
+                </Box>
+                <Box>
+                  <NormalTextField
+                    type="number"
+                    label="Street 1"
+                    name="streetnum"
+                    placeholder="Enter your Street 1 Number"
+                    value={formData.streetnum}
+                    handleChange={handleChange}
+                    sx={{ ml: "12px" }}
+                  />
+                  {errors.streetnum && (
+                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                      {errors.streetnum}
+                    </span>
+                  )}
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 2,
+                  mt: "1rem",
+                }}
+              >
+                <Box>
+                  <NormalTextField
+                    type="text"
+                    name="suburb"
+                    label="Suburb"
+                    placeholder="Enter your Suburb"
+                    value={formData.suburb}
+                    handleChange={handleChange}
+                    required
+                  />
+                  {errors.suburb && (
+                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                      {errors.suburb}
+                    </span>
+                  )}
+                </Box>
+                <Box>
+                  <NormalTextField
+                    type="number"
+                    label="City"
+                    name="city"
+                    placeholder="Enter your City"
+                    value={formData.city}
+                    handleChange={handleChange}
+                    sx={{ ml: "12px" }}
+                  />
+                  {errors.city && (
+                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                      {errors.city}
+                    </span>
+                  )}
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: 2,
+                  mt: "1rem",
+                }}
+              >
+                <Box sx={{ minWidth: "14.813rem" }}>
+                  <NormalDropdown
+                    label="Country"
+                    name="country"
+                    placeholder="Select your Country"
+                    value={formData.country}
+                    handleChange={handleChange}
+                    options={countries}
+                    sx={{ width: "100%" }}
+                  />
+                  {errors.country && (
+                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                      {errors.country}
+                    </span>
+                  )}
+                </Box>
+                <Box>
+                  <NormalDropdown
+                    label="State"
+                    name="state"
+                    value={formData.state}
+                    handleChange={handleChange}
+                    options={states}
+                    placeholder="Select Your State"
+                    sx={{ width: "100%" }}
+                  />
+                  {errors.state && (
+                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                      {errors.state}
+                    </span>
+                  )}
+                </Box>
+
+                <Box>
+                  <NormalTextField
+                    type="number"
+                    label="Post Code"
+                    name="postcode"
+                    placeholder="Enter your Post Code"
+                    value={formData.postcode}
+                    handleChange={handleChange}
+                    sx={{ width: "100%" }}
+                  />
+                  {errors.postcode && (
+                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                      {errors.postcode}
+                    </span>
+                  )}
+                </Box>
+              </Box>
+              <Box sx={{ mt: "1rem" }}>
                 <NormalTextField
                   type="number"
-                  label="Quantity"
-                  name="quantity"
-                  placeholder="1"
-                //   value={formData.quantity}
-                //   handleChange={handleChange}
-                  sx={{ ml: "12px" }}
+                  label="Attention To"
+                  name="attention"
+                  placeholder="Enter Attention To"
+                  value={formData.attention}
+                  handleChange={handleChange}
+                  sx={{ width: "100%" }}
                 />
-                {/* {errors.quantity && (
+                {errors.attention && (
                   <span style={{ color: "red", fontSize: "0.875rem" }}>
-                    {errors.quantity}
+                    {errors.attention}
                   </span>
-                )} */}
+                )}
+              </Box>
+              <Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    padding: "24px",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box>
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        height: "3rem",
+                        width: "7.5rem",
+                        color: "#EF4A00",
+                        borderColor: "#EF4A00",
+                      }}
+                       onClick={handleClose} 
+                    >
+                      Cancel
+                    </Button>
+                  </Box>
+                  <Box sx={{ ml: "1rem" }}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      sx={{ height: "3rem", width: "7.5rem" }}
+                    >
+                      Save
+                    </Button>
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </Box>
-
-          {/* <Box component="form">
-            <Box
-              sx={{
-                display: "flex",
-                padding: "24px",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Box>
-                <Button variant="outlined" sx={{ height: "3rem" }}>
-                  Save & Show
-                </Button>
-              </Box>
-              <Box sx={{ ml: "1rem" }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ height: "3rem" }}
-                >
-                  Save
-                </Button>
-              </Box>
-            </Box>
-          </Box> */}
         </Box>
       </Modal>
     </Box>
