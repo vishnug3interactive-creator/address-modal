@@ -215,7 +215,7 @@ function AddressModal() {
                     placeholder="Select your Address Type"
                     name="addressType"
                     value={formData.addressType}
-                    width="22rem"
+                    width="23rem"
                     handleChange={handleChange}
                     options={[
                       { value: "address1", label: "Address 1" },
@@ -385,7 +385,13 @@ function AddressModal() {
                   )}
                 </Box>
               </Box>
-              <Box sx={{ mt: "1rem" }}>
+              <Box  
+                sx={{
+                  width:'50%',
+                  gap: 2,
+                  mt: "1rem",
+                }}>
+             
                 <NormalTextField
                   type="number"
                   label="Attention To"
@@ -396,7 +402,7 @@ function AddressModal() {
                   sx={{ width: "100%" }}
                 />
                 {errors.attention && (
-                  <span style={{ color: "red", fontSize: "0.875rem" }}>
+                  <span style={{ color: "red",fontSize: "0.875rem" }}>
                     {errors.attention}
                   </span>
                 )}
