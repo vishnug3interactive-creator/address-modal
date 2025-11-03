@@ -1,43 +1,41 @@
-import { Box, Button, Modal, Typography, FormControl } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { NormalTextField } from "../helpers/FormInput";
 import { NormalDropdown } from "../helpers/FormInput";
 import { Country, State } from "country-state-city";
+import { FormField } from "./common/FormField";
+import { FormRow } from "./common/FormRow";
 
 function AddressModal() {
+  const Initial_State = {
+    address: "",
+    addressType: "",
+    labels: "",
+    streetNumber: "",
+    streetnum: "",
+    suburb: "",
+    city: "",
+    country: "",
+    state: "",
+    postcode: "",
+    attention: "",
+  };
+
   const [open, setOpen] = useState(true);
   const handleOpen = () => setOpen(true);
+
+  const [formData, setFormData] = useState(Initial_State);
+
   const handleClose = () => {
     setOpen(false);
-    setFormData(reset);
+    setFormData(Initial_State);
   };
-  const [formData, setFormData] = useState({
-    address: "",
-    addressType: "",
-    labels: "",
-    streetNumber: "",
-    streetnum: "",
-    suburb: "",
-    city: "",
-    country: "",
-    state: "",
-    postcode: "",
-    attention: "",
-  });
 
-  const reset = {
-    address: "",
-    addressType: "",
-    labels: "",
-    streetNumber: "",
-    streetnum: "",
-    suburb: "",
-    city: "",
-    country: "",
-    state: "",
-    postcode: "",
-    attention: "",
-  };
+  const handleCancel=()=>{
+        setFormData(Initial_State);
+        setOpen(true)
+        setErrors({});
+  }
 
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
@@ -48,7 +46,6 @@ function AddressModal() {
       label: c.name,
     }));
     setCountries(countryList);
-    //  console.log(countryList);
   }, []);
 
   useEffect(() => {
@@ -58,7 +55,6 @@ function AddressModal() {
         label: s.name,
       }));
       setStates(stateList);
-      // console.log(stateList)
     } else {
       setStates([]);
     }
@@ -92,7 +88,6 @@ function AddressModal() {
     if (!formData.state) newErrors.state = "State is required";
     if (!formData.postcode) newErrors.postcode = "Postcode is required";
     if (!formData.attention) newErrors.attention = "Attention is required";
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -101,10 +96,7 @@ function AddressModal() {
     e.preventDefault();
     if (!validate()) return;
     alert("Form Submitted");
-    // console.log("Form submitted successfully");
   };
-
-  console.log(formData);
 
   return (
     <Box
@@ -155,19 +147,17 @@ function AddressModal() {
               marginTop: "1rem",
             }}
           >
-            <Box>
-              <Typography
-                id="modal-modal-title"
-                fontWeight="700"
-                sx={{
-                  fontSize: "1.25rem",
-                  color: "#111827",
-                  lineHeight: "1.875rem",
-                }}
-              >
-                Add New Billing Address
-              </Typography>
-            </Box>
+            <Typography
+              id="modal-modal-title"
+              fontWeight="700"
+              sx={{
+                fontSize: "1.25rem",
+                color: "#111827",
+                lineHeight: "1.875rem",
+              }}
+            >
+              Add New Billing Address
+            </Typography>
             <Box onClick={handleClose}>
               <svg
                 width="15"
@@ -203,7 +193,7 @@ function AddressModal() {
               }}
             >
               <Box>
-                <Box>
+                <FormField error={errors.address}>
                   <NormalTextField
                     type="text"
                     name="address"
@@ -213,26 +203,11 @@ function AddressModal() {
                     handleChange={handleChange}
                     required
                   />
-                  {errors.address && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.address}
-                    </span>
-                  )}
-                </Box>
+                </FormField>
               </Box>
 
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "1fr",
-                    sm: "1fr 1fr",
-                  },
-                  gap: 2,
-                  mt: "1rem",
-                }}
-              >
-                <Box>
+              <FormRow columns={2}>
+                <FormField error={errors.addressType}>
                   <NormalDropdown
                     label="Address Type"
                     placeholder="Select your Address Type"
@@ -244,13 +219,8 @@ function AddressModal() {
                       { value: "address2", label: "Address 2" },
                     ]}
                   />
-                  {errors.addressType && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.addressType}
-                    </span>
-                  )}
-                </Box>
-                <Box>
+                </FormField>
+                <FormField error={errors.labels}>
                   <NormalTextField
                     type="number"
                     label="Labels"
@@ -260,26 +230,11 @@ function AddressModal() {
                     handleChange={handleChange}
                     sx={{ ml: "12px" }}
                   />
-                  {errors.labels && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.labels}
-                    </span>
-                  )}
-                </Box>
-              </Box>
+                </FormField>
+              </FormRow>
 
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "1fr",
-                    sm: "1fr 1fr",
-                  },
-                  gap: 2,
-                  mt: "1rem",
-                }}
-              >
-                <Box>
+              <FormRow columns={2}>
+                <FormField error={errors.streetNumber}>
                   <NormalTextField
                     type="text"
                     name="streetNumber"
@@ -289,13 +244,9 @@ function AddressModal() {
                     handleChange={handleChange}
                     required
                   />
-                  {errors.streetNumber && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.streetNumber}
-                    </span>
-                  )}
-                </Box>
-                <Box>
+                </FormField>
+
+                <FormField error={errors.streetnum}>
                   <NormalTextField
                     type="number"
                     label="Street 1"
@@ -305,25 +256,11 @@ function AddressModal() {
                     handleChange={handleChange}
                     sx={{ ml: "12px" }}
                   />
-                  {errors.streetnum && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.streetnum}
-                    </span>
-                  )}
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "1fr",
-                    sm: "1fr 1fr",
-                  },
-                  gap: 2,
-                  mt: "1rem",
-                }}
-              >
-                <Box>
+                </FormField>
+              </FormRow>
+
+              <FormRow columns={2}>
+                <FormField error={errors.suburb}>
                   <NormalTextField
                     type="text"
                     name="suburb"
@@ -333,13 +270,9 @@ function AddressModal() {
                     handleChange={handleChange}
                     required
                   />
-                  {errors.suburb && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.suburb}
-                    </span>
-                  )}
-                </Box>
-                <Box>
+                </FormField>
+
+                <FormField error={errors.city}>
                   <NormalTextField
                     type="number"
                     label="City"
@@ -349,27 +282,11 @@ function AddressModal() {
                     handleChange={handleChange}
                     sx={{ ml: "12px" }}
                   />
-                  {errors.city && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.city}
-                    </span>
-                  )}
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  display: "grid",
-                  // gridTemplateColumns: "repeat(3, 1fr)",
-                  gridTemplateColumns: {
-                    xs: "1fr",
-                    sm: "1fr 1fr",
-                    lg: "1fr 1fr 1fr",
-                  },
-                  gap: 2,
-                  mt: "1rem",
-                }}
-              >
-                <Box>
+                </FormField>
+              </FormRow>
+
+              <FormRow columns={3}>
+                <FormField error={errors.country}>
                   <NormalDropdown
                     label="Country"
                     name="country"
@@ -379,13 +296,9 @@ function AddressModal() {
                     options={countries}
                     sx={{ width: "100%" }}
                   />
-                  {errors.country && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.country}
-                    </span>
-                  )}
-                </Box>
-                <Box>
+                </FormField>
+
+                <FormField error={errors.state}>
                   <NormalDropdown
                     label="State"
                     name="state"
@@ -395,14 +308,9 @@ function AddressModal() {
                     placeholder="Select Your State"
                     sx={{ width: "100%" }}
                   />
-                  {errors.state && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.state}
-                    </span>
-                  )}
-                </Box>
+                </FormField>
 
-                <Box>
+                <FormField error={errors.postcode}>
                   <NormalTextField
                     type="number"
                     label="Post Code"
@@ -411,41 +319,24 @@ function AddressModal() {
                     value={formData.postcode}
                     handleChange={handleChange}
                   />
-                  {errors.postcode && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.postcode}
-                    </span>
-                  )}
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  gap: 2,
-                  mt: "1rem",
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "1fr",
-                    sm: "1fr 1fr",
-                  },
-                }}
-              >
+                </FormField>
+              </FormRow>
+
+              <FormRow columns={2}>
                 <Box sx={{ gridColumn: "1 / 0" }}>
-                  <NormalTextField
-                    type="number"
-                    label="Attention To"
-                    name="attention"
-                    placeholder="Enter Attention To"
-                    value={formData.attention}
-                    handleChange={handleChange}
-                    sx={{ width: "100%" }}
-                  />
-                  {errors.attention && (
-                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                      {errors.attention}
-                    </span>
-                  )}
+                  <FormField error={errors.attention}>
+                    <NormalTextField
+                      type="number"
+                      label="Attention To"
+                      name="attention"
+                      placeholder="Enter Attention To"
+                      value={formData.attention}
+                      handleChange={handleChange}
+                      sx={{ width: "100%" }}
+                    />
+                  </FormField>
                 </Box>
-              </Box>
+              </FormRow>
             </Box>
 
             <Box>
@@ -471,10 +362,9 @@ function AddressModal() {
                       color: "#EF4A00",
                       borderColor: "#EF4A00",
                       fontSize: "1rem",
-                      fontFamily: "Nunito",
                       textTransform: "none",
                     }}
-                    onClick={handleClose}
+                    onClick={handleCancel}
                   >
                     Cancel
                   </Button>
@@ -487,7 +377,6 @@ function AddressModal() {
                       height: "3rem",
                       width: "7.5rem",
                       fontSize: "1rem",
-                      fontFamily: "Nunito",
                       textTransform: "none",
                     }}
                   >
@@ -502,5 +391,4 @@ function AddressModal() {
     </Box>
   );
 }
-
 export default AddressModal;

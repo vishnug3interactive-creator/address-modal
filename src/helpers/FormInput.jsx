@@ -3,7 +3,6 @@ import React from "react";
 import { Dropdown } from "primereact/dropdown";
 import Arrow from "../assets/images/angle-down.png";
 
-
 export const NormalTextField = ({
   label,
   name,
@@ -74,7 +73,6 @@ export const NormalDropdown = ({
   placeholder,
   lineHeight,
   width='100%'
-  // width = "14.813rem",
 }) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
