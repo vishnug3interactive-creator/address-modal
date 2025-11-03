@@ -34,7 +34,7 @@ export const NormalTextField = ({
           height: "3.125rem",
           background: "none",
           border: "1px solid #D1D5DB",
-          borderRadius: "8px",
+             borderRadius: "0.5rem",
           color: "#111827",
           display: "flex",
           alignItems: "center",
@@ -95,7 +95,7 @@ export const NormalDropdown = ({
         sx={{
           height: "3.125rem",
           background: "none",
-          borderRadius: "8px",
+          borderRadius: "0.5rem",
           color: "#111827",
           display: "flex",
           alignItems: "center",

@@ -137,8 +137,6 @@ function AddressModal() {
             width: "50.5rem",
             bgcolor: "background.paper",
             boxShadow: 24,
-            p: 4,
-            // overflowY: "scroll",
             maxHeight: "90vh",
             borderRadius: "0.75rem",
           }}
@@ -148,6 +146,7 @@ function AddressModal() {
               marginLeft: "1.5rem",
               marginRight: "1.5rem",
               marginTop: "1rem",
+              
             }}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -194,7 +193,7 @@ function AddressModal() {
                     required
                   />
                   {errors.address && (
-                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                       {errors.address}
                     </span>
                   )}
@@ -223,7 +222,7 @@ function AddressModal() {
                     ]}
                   />
                   {errors.addressType && (
-                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                       {errors.addressType}
                     </span>
                   )}
@@ -231,7 +230,7 @@ function AddressModal() {
                 <Box>
                   <NormalTextField
                     type="number"
-                    label="labels"
+                    label="Labels"
                     name="labels"
                     placeholder="Enter your Label"
                     value={formData.labels}
@@ -239,7 +238,7 @@ function AddressModal() {
                     sx={{ ml: "12px" }}
                   />
                   {errors.labels && (
-                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                       {errors.labels}
                     </span>
                   )}
@@ -264,7 +263,7 @@ function AddressModal() {
                     required
                   />
                   {errors.streetNumber && (
-                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                       {errors.streetNumber}
                     </span>
                   )}
@@ -280,7 +279,7 @@ function AddressModal() {
                     sx={{ ml: "12px" }}
                   />
                   {errors.streetnum && (
-                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                       {errors.streetnum}
                     </span>
                   )}
@@ -305,7 +304,7 @@ function AddressModal() {
                     required
                   />
                   {errors.suburb && (
-                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                       {errors.suburb}
                     </span>
                   )}
@@ -321,7 +320,7 @@ function AddressModal() {
                     sx={{ ml: "12px" }}
                   />
                   {errors.city && (
-                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                       {errors.city}
                     </span>
                   )}
@@ -346,7 +345,7 @@ function AddressModal() {
                     sx={{ width: "100%" }}
                   />
                   {errors.country && (
-                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                       {errors.country}
                     </span>
                   )}
@@ -362,7 +361,7 @@ function AddressModal() {
                     sx={{ width: "100%" }}
                   />
                   {errors.state && (
-                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                       {errors.state}
                     </span>
                   )}
@@ -379,7 +378,7 @@ function AddressModal() {
                     sx={{ width: "100%" }}
                   />
                   {errors.postcode && (
-                    <span style={{ color: "red", fontSize: "0.875rem" }}>
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
                       {errors.postcode}
                     </span>
                   )}
@@ -402,7 +401,7 @@ function AddressModal() {
                   sx={{ width: "100%" }}
                 />
                 {errors.attention && (
-                  <span style={{ color: "red",fontSize: "0.875rem" }}>
+                  <span style={{ color: "#f27466",fontSize: "0.875rem" }}>
                     {errors.attention}
                   </span>
                 )}
@@ -411,7 +410,8 @@ function AddressModal() {
                 <Box
                   sx={{
                     display: "flex",
-                    padding: "24px",
+                    mt:'1.5rem',
+                    mb:'1.5rem',
                     alignItems: "center",
                     justifyContent: "center",
                   }}
