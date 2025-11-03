@@ -70,6 +70,7 @@ function AddressModal() {
       ...prev,
       [name]: value,
     }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const [errors, setErrors] = useState({});
@@ -129,54 +130,79 @@ function AddressModal() {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "50.5rem",
             bgcolor: "background.paper",
-            boxShadow: 24,
-            overflowY: "scroll",
             maxHeight: "90vh",
+            display: "flex",
+            flexDirection: "column",
             borderRadius: "0.75rem",
+            width: {
+              xs: "90%",
+              sm: "80%",
+              md: "60%",
+              lg: "50.5rem",
+            },
           }}
         >
           <Box
             sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              position: "sticky",
+              top: 0,
+              zIndex: 2,
               marginLeft: "1.5rem",
               marginRight: "1.5rem",
               marginTop: "1rem",
             }}
           >
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Box sx={{ minHeight: "1.875rem" }}>
-                <Typography
-                  id="modal-modal-title"
-                  fontWeight="700"
-                  sx={{
-                    fontSize: "1.25rem",
-                    color: "#111827",
-                    lineHeight: "1.875rem",
-                  }}
-                >
-                  Add New Billing Address
-                </Typography>
-              </Box>
-              <Box onClick={handleClose}>
-                <svg
-                  width="15"
-                  height="15"
-                  viewBox="0 0 15 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12.4143 0.413086C12.7658 0.061594 13.3361 0.0617674 13.6877 0.413086C14.0393 0.764662 14.0393 1.33494 13.6877 1.68652L8.32349 7.0498L13.6858 12.4141C14.0374 12.7656 14.0373 13.3359 13.6858 13.6875C13.5108 13.8625 13.2804 13.9511 13.05 13.9512C12.8487 13.9512 12.6466 13.8843 12.4817 13.749L12.4133 13.6875L7.04907 8.32324L1.68579 13.6875C1.5108 13.8625 1.28042 13.9511 1.05005 13.9512C0.848737 13.9512 0.646642 13.8843 0.481689 13.749L0.41333 13.6875C0.0620191 13.3359 0.0618407 12.7656 0.41333 12.4141L5.77759 7.0498L0.41333 1.68652C0.0620189 1.33492 0.0618406 0.764575 0.41333 0.413086C0.764825 0.0615914 1.33517 0.0617595 1.68677 0.413086L7.05005 5.77734L12.4143 0.413086Z"
-                    fill="#4B5563"
-                    stroke="#4B5563"
-                    stroke-width="0.3"
-                  />
-                </svg>
-              </Box>
+            <Box>
+              <Typography
+                id="modal-modal-title"
+                fontWeight="700"
+                sx={{
+                  fontSize: "1.25rem",
+                  color: "#111827",
+                  lineHeight: "1.875rem",
+                }}
+              >
+                Add New Billing Address
+              </Typography>
             </Box>
-            <Box component="form" onSubmit={handleSubmit}>
-              <Box sx={{ mt: "1.5rem" }}>
+            <Box onClick={handleClose}>
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 15 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.4143 0.413086C12.7658 0.061594 13.3361 0.0617674 13.6877 0.413086C14.0393 0.764662 14.0393 1.33494 13.6877 1.68652L8.32349 7.0498L13.6858 12.4141C14.0374 12.7656 14.0373 13.3359 13.6858 13.6875C13.5108 13.8625 13.2804 13.9511 13.05 13.9512C12.8487 13.9512 12.6466 13.8843 12.4817 13.749L12.4133 13.6875L7.04907 8.32324L1.68579 13.6875C1.5108 13.8625 1.28042 13.9511 1.05005 13.9512C0.848737 13.9512 0.646642 13.8843 0.481689 13.749L0.41333 13.6875C0.0620191 13.3359 0.0618407 12.7656 0.41333 12.4141L5.77759 7.0498L0.41333 1.68652C0.0620189 1.33492 0.0618406 0.764575 0.41333 0.413086C0.764825 0.0615914 1.33517 0.0617595 1.68677 0.413086L7.05005 5.77734L12.4143 0.413086Z"
+                  fill="#4B5563"
+                  stroke="#4B5563"
+                  stroke-width="0.3"
+                />
+              </svg>
+            </Box>
+          </Box>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              maxHeight: "calc(90vh - 100px)",
+            }}
+          >
+            <Box
+              sx={{
+                flex: 1,
+                overflowY: "auto",
+                p: "1.5rem",
+              }}
+            >
+              <Box>
                 <Box>
                   <NormalTextField
                     type="text"
@@ -198,7 +224,10 @@ function AddressModal() {
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "1fr 1fr",
+                  },
                   gap: 2,
                   mt: "1rem",
                 }}
@@ -209,7 +238,6 @@ function AddressModal() {
                     placeholder="Select your Address Type"
                     name="addressType"
                     value={formData.addressType}
-                    width="23rem"
                     handleChange={handleChange}
                     options={[
                       { value: "address1", label: "Address 1" },
@@ -239,10 +267,14 @@ function AddressModal() {
                   )}
                 </Box>
               </Box>
+
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "1fr 1fr",
+                  },
                   gap: 2,
                   mt: "1rem",
                 }}
@@ -283,7 +315,10 @@ function AddressModal() {
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "1fr 1fr",
+                  },
                   gap: 2,
                   mt: "1rem",
                 }}
@@ -324,12 +359,17 @@ function AddressModal() {
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
+                  // gridTemplateColumns: "repeat(3, 1fr)",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "1fr 1fr",
+                    lg: "1fr 1fr 1fr",
+                  },
                   gap: 2,
                   mt: "1rem",
                 }}
               >
-                <Box sx={{ minWidth: "14.813rem" }}>
+                <Box>
                   <NormalDropdown
                     label="Country"
                     name="country"
@@ -370,7 +410,6 @@ function AddressModal() {
                     placeholder="Enter your Post Code"
                     value={formData.postcode}
                     handleChange={handleChange}
-                    sx={{ width: "100%" }}
                   />
                   {errors.postcode && (
                     <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
@@ -381,68 +420,79 @@ function AddressModal() {
               </Box>
               <Box
                 sx={{
-                  width: "50%",
                   gap: 2,
                   mt: "1rem",
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "1fr 1fr",
+                  },
                 }}
               >
-                <NormalTextField
-                  type="number"
-                  label="Attention To"
-                  name="attention"
-                  placeholder="Enter Attention To"
-                  value={formData.attention}
-                  handleChange={handleChange}
-                  sx={{ width: "100%" }}
-                />
-                {errors.attention && (
-                  <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
-                    {errors.attention}
-                  </span>
-                )}
+                <Box sx={{ gridColumn: "1 / 0" }}>
+                  <NormalTextField
+                    type="number"
+                    label="Attention To"
+                    name="attention"
+                    placeholder="Enter Attention To"
+                    value={formData.attention}
+                    handleChange={handleChange}
+                    sx={{ width: "100%" }}
+                  />
+                  {errors.attention && (
+                    <span style={{ color: "#f27466", fontSize: "0.875rem" }}>
+                      {errors.attention}
+                    </span>
+                  )}
+                </Box>
               </Box>
-              <Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    mt: "1.5rem",
-                    mb: "1.5rem",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Box>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        height: "3rem",
-                        width: "7.5rem",
-                        color: "#EF4A00",
-                        borderColor: "#EF4A00",
-                        fontSize: "1rem",
-                        fontFamily: "Nunito",
-                        textTransform: "none",
-                      }}
-                      onClick={handleClose}
-                    >
-                      Cancel
-                    </Button>
-                  </Box>
-                  <Box sx={{ ml: "1rem" }}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      sx={{
-                        height: "3rem",
-                        width: "7.5rem",
-                        fontSize: "1rem",
-                        fontFamily: "Nunito",
-                        textTransform: "none",
-                      }}
-                    >
-                      Save
-                    </Button>
-                  </Box>
+            </Box>
+
+            <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  mt: "1.5rem",
+                  mb: "1.5rem",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "sticky",
+                  bottom: 0,
+                  bgcolor: "white",
+                  zIndex: 2,
+                }}
+              >
+                <Box>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      height: "3rem",
+                      width: "7.5rem",
+                      color: "#EF4A00",
+                      borderColor: "#EF4A00",
+                      fontSize: "1rem",
+                      fontFamily: "Nunito",
+                      textTransform: "none",
+                    }}
+                    onClick={handleClose}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+                <Box sx={{ ml: "1rem" }}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      height: "3rem",
+                      width: "7.5rem",
+                      fontSize: "1rem",
+                      fontFamily: "Nunito",
+                      textTransform: "none",
+                    }}
+                  >
+                    Save
+                  </Button>
                 </Box>
               </Box>
             </Box>

@@ -73,7 +73,8 @@ export const NormalDropdown = ({
   options = [],
   placeholder,
   lineHeight,
-  width = "14.813rem",
+  width='100%'
+  // width = "14.813rem",
 }) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
