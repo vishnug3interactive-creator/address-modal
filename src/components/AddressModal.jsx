@@ -5,6 +5,7 @@ import { NormalDropdown } from "../helpers/FormInput";
 import { Country, State } from "country-state-city";
 import { FormField } from "./common/FormField";
 import { FormRow } from "./common/FormRow";
+import Divider from "@mui/material/Divider";
 
 function AddressModal() {
   const Initial_State = {
@@ -31,11 +32,11 @@ function AddressModal() {
     setFormData(Initial_State);
   };
 
-  const handleCancel=()=>{
-        setFormData(Initial_State);
-        setOpen(true)
-        setErrors({});
-  }
+  const handleCancel = () => {
+    setFormData(Initial_State);
+    setOpen(true);
+    setErrors({});
+  };
 
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
@@ -122,7 +123,7 @@ function AddressModal() {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            bgcolor: "background.paper",
+            bgcolor: "#FFFFFF",
             maxHeight: "90vh",
             display: "flex",
             flexDirection: "column",
@@ -130,9 +131,10 @@ function AddressModal() {
             width: {
               xs: "90%",
               sm: "80%",
-              md: "60%",
+              md: "70%",
               lg: "50.5rem",
             },
+            outline: "none",
           }}
         >
           <Box
@@ -145,6 +147,7 @@ function AddressModal() {
               marginLeft: "1.5rem",
               marginRight: "1.5rem",
               marginTop: "1rem",
+              marginBottom: "1rem",
             }}
           >
             <Typography
@@ -158,7 +161,7 @@ function AddressModal() {
             >
               Add New Billing Address
             </Typography>
-            <Box onClick={handleClose}>
+            <Box onClick={handleClose} sx={{ cursor: "pointer" }}>
               <svg
                 width="15"
                 height="15"
@@ -175,6 +178,7 @@ function AddressModal() {
               </svg>
             </Box>
           </Box>
+          <Divider />
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -193,148 +197,136 @@ function AddressModal() {
               }}
             >
               <Box>
-                <FormField error={errors.address}>
-                  <NormalTextField
-                    type="text"
-                    name="address"
-                    label="Search Online"
-                    placeholder="Enter your address"
-                    value={formData.address}
-                    handleChange={handleChange}
-                    required
-                  />
-                </FormField>
+                <NormalTextField
+                  type="text"
+                  name="address"
+                  label="Search Online"
+                  placeholder="Enter your address"
+                  value={formData.address}
+                  handleChange={handleChange}
+                  required
+                  error={errors.address}
+                />
               </Box>
-
               <FormRow columns={2}>
-                <FormField error={errors.addressType}>
-                  <NormalDropdown
-                    label="Address Type"
-                    placeholder="Select your Address Type"
-                    name="addressType"
-                    value={formData.addressType}
-                    handleChange={handleChange}
-                    options={[
-                      { value: "address1", label: "Address 1" },
-                      { value: "address2", label: "Address 2" },
-                    ]}
-                  />
-                </FormField>
-                <FormField error={errors.labels}>
-                  <NormalTextField
-                    type="number"
-                    label="Labels"
-                    name="labels"
-                    placeholder="Enter your Label"
-                    value={formData.labels}
-                    handleChange={handleChange}
-                    sx={{ ml: "12px" }}
-                  />
-                </FormField>
+                <NormalDropdown
+                  label="Address Type"
+                  placeholder="Select your Address Type"
+                  name="addressType"
+                  value={formData.addressType}
+                  handleChange={handleChange}
+                  options={[
+                    { value: "address1", label: "Address 1" },
+                    { value: "address2", label: "Address 2" },
+                  ]}
+                  error={errors.addressType}
+                />
+
+                <NormalTextField
+                  type="number"
+                  label="Labels"
+                  name="labels"
+                  placeholder="Enter your Label"
+                  value={formData.labels}
+                  handleChange={handleChange}
+                  sx={{ ml: "12px" }}
+                  error={errors.labels}
+                />
               </FormRow>
 
               <FormRow columns={2}>
-                <FormField error={errors.streetNumber}>
-                  <NormalTextField
-                    type="text"
-                    name="streetNumber"
-                    label="Street Number"
-                    placeholder="Enter your Street Number"
-                    value={formData.streetNumber}
-                    handleChange={handleChange}
-                    required
-                  />
-                </FormField>
+                <NormalTextField
+                  type="text"
+                  name="streetNumber"
+                  label="Street Number"
+                  placeholder="Enter your Street Number"
+                  value={formData.streetNumber}
+                  handleChange={handleChange}
+                  required
+                  error={errors.streetNumber}
+                />
 
-                <FormField error={errors.streetnum}>
-                  <NormalTextField
-                    type="number"
-                    label="Street 1"
-                    name="streetnum"
-                    placeholder="Enter your Street 1 Number"
-                    value={formData.streetnum}
-                    handleChange={handleChange}
-                    sx={{ ml: "12px" }}
-                  />
-                </FormField>
+                <NormalTextField
+                  type="number"
+                  label="Street 1"
+                  name="streetnum"
+                  placeholder="Enter your Street 1 Number"
+                  value={formData.streetnum}
+                  handleChange={handleChange}
+                  sx={{ ml: "12px" }}
+                  error={errors.streetnum}
+                />
               </FormRow>
 
               <FormRow columns={2}>
-                <FormField error={errors.suburb}>
-                  <NormalTextField
-                    type="text"
-                    name="suburb"
-                    label="Suburb"
-                    placeholder="Enter your Suburb"
-                    value={formData.suburb}
-                    handleChange={handleChange}
-                    required
-                  />
-                </FormField>
-
-                <FormField error={errors.city}>
-                  <NormalTextField
-                    type="number"
-                    label="City"
-                    name="city"
-                    placeholder="Enter your City"
-                    value={formData.city}
-                    handleChange={handleChange}
-                    sx={{ ml: "12px" }}
-                  />
-                </FormField>
+                <NormalTextField
+                  type="text"
+                  name="suburb"
+                  label="Suburb"
+                  placeholder="Enter your Suburb"
+                  value={formData.suburb}
+                  handleChange={handleChange}
+                  required
+                  error={errors.suburb}
+                />
+                <NormalTextField
+                  type="number"
+                  label="City"
+                  name="city"
+                  placeholder="Enter your City"
+                  value={formData.city}
+                  handleChange={handleChange}
+                  sx={{ ml: "12px" }}
+                  error={errors.city}
+                />
               </FormRow>
 
               <FormRow columns={3}>
-                <FormField error={errors.country}>
-                  <NormalDropdown
-                    label="Country"
-                    name="country"
-                    placeholder="Select your Country"
-                    value={formData.country}
-                    handleChange={handleChange}
-                    options={countries}
-                    sx={{ width: "100%" }}
-                  />
-                </FormField>
+                <NormalDropdown
+                  label="Country"
+                  name="country"
+                  placeholder="Select your Country"
+                  value={formData.country}
+                  handleChange={handleChange}
+                  options={countries}
+                  sx={{ width: "100%" }}
+                  error={errors.country}
+                />
 
-                <FormField error={errors.state}>
-                  <NormalDropdown
-                    label="State"
-                    name="state"
-                    value={formData.state}
-                    handleChange={handleChange}
-                    options={states}
-                    placeholder="Select Your State"
-                    sx={{ width: "100%" }}
-                  />
-                </FormField>
+                <NormalDropdown
+                  label="State"
+                  name="state"
+                  value={formData.state}
+                  handleChange={handleChange}
+                  options={states}
+                  placeholder="Select Your State"
+                  sx={{ width: "100%" }}
+                  error={errors.state}
+                />
 
-                <FormField error={errors.postcode}>
-                  <NormalTextField
-                    type="number"
-                    label="Post Code"
-                    name="postcode"
-                    placeholder="Enter your Post Code"
-                    value={formData.postcode}
-                    handleChange={handleChange}
-                  />
-                </FormField>
+                <NormalTextField
+                  type="number"
+                  label="Post Code"
+                  name="postcode"
+                  placeholder="Enter your Post Code"
+                  value={formData.postcode}
+                  handleChange={handleChange}
+                  error={errors.postcode}
+                />
               </FormRow>
 
               <FormRow columns={2}>
-                <Box sx={{ gridColumn: "1 / 0" }}>
-                  <FormField error={errors.attention}>
-                    <NormalTextField
-                      type="number"
-                      label="Attention To"
-                      name="attention"
-                      placeholder="Enter Attention To"
-                      value={formData.attention}
-                      handleChange={handleChange}
-                      sx={{ width: "100%" }}
-                    />
-                  </FormField>
+                <Box>
+                  <NormalTextField
+                    type="number"
+                    label="Attention To"
+                    name="attention"
+                    placeholder="Enter Attention To"
+                    value={formData.attention}
+                    handleChange={handleChange}
+                    sx={{ width: "100%" }}
+                    error={errors.attention}
+                  />
                 </Box>
               </FormRow>
             </Box>
@@ -363,6 +355,12 @@ function AddressModal() {
                       borderColor: "#EF4A00",
                       fontSize: "1rem",
                       textTransform: "none",
+                      cursor: "pointer",
+                      "&:hover": {
+                        backgroundColor: "#EF4A00",
+                        color: "#FFFFFF",
+                        borderColor: "#EF4A00",
+                      },
                     }}
                     onClick={handleCancel}
                   >

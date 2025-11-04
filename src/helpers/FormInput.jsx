@@ -11,6 +11,7 @@ export const NormalTextField = ({
   placeholder,
   minLength,
   isNumber = false,
+  error
 }) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -18,7 +19,6 @@ export const NormalTextField = ({
         <Typography
           sx={{
             fontSize: "1rem",
-            // fontWeight: 500,
             fontWeight: "Bold",
             lineHeight: "1.5rem",
             color: "#111827",
@@ -34,7 +34,7 @@ export const NormalTextField = ({
           height: "3.125rem",
           background: "none",
           border: "1px solid #D1D5DB",
-             borderRadius: "0.5rem",
+          borderRadius: "0.5rem",
           color: "#111827",
           display: "flex",
           alignItems: "center",
@@ -55,11 +55,23 @@ export const NormalTextField = ({
             outline: "none",
             fontSize: "1rem",
             fontFamily: "Nunito",
-            color: "#111827",
+            color: "#4B5563",
             background: "transparent",
           }}
         />
+           
       </Box>
+       {error && (
+      <span 
+        style={{ 
+          color: "#f27466", 
+          fontSize: "0.875rem", 
+          fontFamily: 'Nunito' 
+        }}
+      >
+        {error}
+      </span>
+    )}
     </Box>
   );
 };
@@ -72,7 +84,8 @@ export const NormalDropdown = ({
   options = [],
   placeholder,
   lineHeight,
-  width='100%'
+  width='100%',
+  error
 }) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "6px" }}>
@@ -80,7 +93,6 @@ export const NormalDropdown = ({
         <Typography
           sx={{
             fontSize: "1rem",
-            // fontWeight: 500,
             fontWeight: "Bold",
             lineHeight: lineHeight || "1.5rem",
             color: "#111827",
@@ -94,16 +106,13 @@ export const NormalDropdown = ({
       <Box
         sx={{
           height: "3.125rem",
-          background: "none",
-          borderRadius: "0.5rem",
-          color: "#111827",
           display: "flex",
           alignItems: "center",
         }}
       >
         <Box sx={{ minWidth: width }}>
-          <Box sx={{ position: "relative" }}>
-            <FormControl fullWidth>
+          <Box sx={{ position: "relative",  }}>
+            <FormControl fullWidth >
               <Select
                 name={name}
                 value={value ?? ""}
@@ -114,7 +123,14 @@ export const NormalDropdown = ({
                   height: "3.125rem",
                   fontFamily: "Nunito",
                   fontSize: "1rem",
-                  color: "#111827",
+                  border: "1px solid #D1D5DB",
+                  color:'#4B5563' ,
+                  borderRadius: "0.5rem",
+                 
+              '& .MuiOutlinedInput-notchedOutline': {
+                border: 'none',
+              },
+            
                 }}
               >
                 <MenuItem value="">{placeholder}</MenuItem>
@@ -143,6 +159,17 @@ export const NormalDropdown = ({
           </Box>
         </Box>
       </Box>
+      {error && (
+      <span 
+        style={{ 
+          color: "#f27466", 
+          fontSize: "0.875rem", 
+          fontFamily: 'Nunito' 
+        }}
+      >
+        {error}
+      </span>
+    )}
     </Box>
   );
 };
